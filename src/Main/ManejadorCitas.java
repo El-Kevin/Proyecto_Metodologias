@@ -33,13 +33,13 @@ public class ManejadorCitas {
          
          for (int i = 0; i < jsonList.length(); i++){
              JSONObject jsonObject = (JSONObject) jsonList.get(i);
-             CitaMedica userData = new CitaMedica();
-             userData.setNombre(jsonObject.getString("Especialidad"));
-             userData.setApellido(jsonObject.getString("FechaEmision"));
-             userData.setNumeroCedula(jsonObject.getString("NombreMedico"));
-             userData.setMotivoCita(jsonObject.getString("FechaCita"));
-             userData.setClave(jsonObject.getString("CodigoCita"));
-             userData.setClave(jsonObject.getString("Disponibilidad"));
+             CitaMedica userData = new CitaMedica() {};
+             userData.setEspecialidad(jsonObject.getString("Especialidad"));
+             userData.setFechaEmision(jsonObject.getString("FechaEmision"));
+             userData.setNombreMedico(jsonObject.getString("NombreMedico"));
+             userData.setFechaCita(jsonObject.getString("FechaCita"));
+             userData.setCodigoCita(jsonObject.getString("CodigoCita"));
+             userData.setDisponibilidad(jsonObject.getBoolean("Disponibilidad"));
              citaMedica.add(userData);
          }
          return citaMedica;
