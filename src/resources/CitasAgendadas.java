@@ -12,7 +12,8 @@ import java.util.ArrayList;
 /**
  *
  * @author User
- */public class CitasAgendadas extends CitaMedica {
+ */
+public class CitasAgendadas extends CitaMedica {
 
     private int numeroCitasAgendadas;
     private ArrayList<CitaMedica> citasAgendadas;

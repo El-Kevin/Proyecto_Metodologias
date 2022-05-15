@@ -98,7 +98,7 @@ public void sobreescribirArchivo(ArrayList<Paciente> dataList) throws IOExceptio
          return pacientes;
     }
     public void comprobarRegistro(String Usuario, String password) throws FileNotFoundException{
-        ArrayList<Paciente> listaPaciente = new ArrayList<Paciente>();
+        ArrayList<Paciente> listaPaciente = new ArrayList<>();
         listaPaciente = leerArchivoUsuarios();
         
         for (Paciente User : listaPaciente){

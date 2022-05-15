@@ -26,7 +26,7 @@ public class ManejadorCitas {
 
     public ArrayList<CitaMedica> leerArchivoCitas() throws FileNotFoundException {
         // ScoreData is the array where we can read the core from file
-        ArrayList<CitaMedica> citaMedica = new ArrayList<CitaMedica>();
+        ArrayList<CitaMedica> citaMedica = new ArrayList<>();
         File file = new File(pathCitas);
         // If the file is empty or is not exist return the dataList
         if (!file.exists() || file.length() == 0) {
@@ -73,12 +73,19 @@ public class ManejadorCitas {
 
     ;
     
-    public void reservarCita() {
-        //cd = getCitasDisponibles();
+    public void reservarCita() throws FileNotFoundException  {
         Scanner sc = new Scanner(System.in);
+        ArrayList<CitaMedica> citas = leerArchivoCitas();
+        CitasDisponibles cd = new CitasDisponibles();
+        cd.mostrarCitasDisponibles(citas);
+        int citaSeleccionada = sc.nextInt();
+        
+        
+        //cd = getCitasDisponibles();
+        
         System.out.println("Ingrese el numero de la cita que desea agendar:");
         int cita = sc.nextInt();
-        ArrayList<CitaMedica> cm = new ArrayList<CitaMedica>();
+        ArrayList<CitaMedica> cm = new ArrayList<>();
         //cm.add(cd.get(cita))
         //sobreescribirArchivo(cm);
 

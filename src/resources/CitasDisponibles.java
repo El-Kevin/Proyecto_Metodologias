@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Main;
 
 import java.time.LocalDate;
@@ -19,24 +22,8 @@ public class CitasDisponibles extends CitaMedica{
     }
 
     public CitasDisponibles() {
-         citasDisponibles = new ArrayList<>();
+         citasDisponibles = new ArrayList<CitaMedica>();
          numeroCitasDisponibles = citasDisponibles.size();
-    }
-
-    public int getNumeroCitasDisponibles() {
-        return numeroCitasDisponibles;
-    }
-
-    public void setNumeroCitasDisponibles(int numeroCitasDisponibles) {
-        this.numeroCitasDisponibles = numeroCitasDisponibles;
-    }
-
-    public ArrayList<CitaMedica> getCitasDisponibles() {
-        return citasDisponibles;
-    }
-
-    public void setCitasDisponibles(ArrayList<CitaMedica> citasDisponibles) {
-        this.citasDisponibles = citasDisponibles;
     }
     
     
@@ -62,7 +49,7 @@ public class CitasDisponibles extends CitaMedica{
         }
          
          for(int j = 0; j<citasDisponibles.size(); j++){
-             System.out.println("\n" + (j+1) +".- " + citasDisponibles.get(j));
+             System.out.println("\n" + citasDisponibles.get(j));
          }
         
     }
