@@ -46,12 +46,23 @@ public class ManejadorCitas {
     }
     public static  void mostrarCitaEliminada(CitaMedica cm){
         System.out.println("La cita medica: ");
-        System.out.println("Nombre");
+        System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
+        System.out.println("Fecha de emision del documento: "+ cm.getFechaEmision());
+        System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
+        System.out.println("Se ha cancelado exitosamente.");
     };
     
-    public static void mostrarCitaAgendada(){};
+    public static void mostrarCitaAgendada(CitasAgendadas cm){
+        System.out.println("La cita medica: ");
+        System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
+        System.out.println("Fecha de emision del documento: "+ cm.getFechaEmision());
+        System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
+        System.out.println("Se ha agendado exitosamente. Restan " +cm.calcularDiasFaltantes() + "");
+    };
     
-    public static void reservarCita(){};
+    public static void reservarCita(){
+        
+    };
     
     public static void eliminarCita(){};
     
