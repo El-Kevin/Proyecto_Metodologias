@@ -17,8 +17,8 @@ public class CitasDisponibles extends CitaMedica{
     private int numeroCitasDisponibles;
     private ArrayList<CitaMedica> citasDisponibles;
 
-    public CitasDisponibles(String especialidad, String fechaEmision, String nombreMedico, String fechaCita, String codigoCita) {
-        super(especialidad, fechaEmision, nombreMedico, fechaCita, codigoCita, true);
+    public CitasDisponibles(String numeroDeCedula , String especialidad, String fechaEmision, String nombreMedico, String fechaCita, String codigoCita) {
+        super(numeroDeCedula, especialidad, fechaEmision, nombreMedico, fechaCita, codigoCita, true);
     }
     
     

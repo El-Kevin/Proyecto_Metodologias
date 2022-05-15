@@ -15,14 +15,24 @@ public abstract class CitaMedica {
     private String fechaCita;
     private String codigoCita;
     private boolean disponibilidad;
+    private String numeroDeCedula;
 
-    public CitaMedica(String especialidad, String fechaEmision, String nombreMedico, String fechaCita, String codigoCita, boolean disponibilidad) {
+    public String getNumeroDeCedula() {
+        return numeroDeCedula;
+    }
+
+    public void setNumeroDeCedula(String numeroDeCedula) {
+        this.numeroDeCedula = numeroDeCedula;
+    }
+
+    public CitaMedica(String numeroDeCedula, String especialidad, String fechaEmision, String nombreMedico, String fechaCita, String codigoCita, boolean disponibilidad) {
         this.especialidad = especialidad;
         this.fechaEmision = fechaEmision;
         this.nombreMedico = nombreMedico;
         this.fechaCita = fechaCita;
         this.codigoCita = codigoCita;
         this.disponibilidad = disponibilidad;
+        this.numeroDeCedula = numeroDeCedula;
     }
 
     public String getEspecialidad() {

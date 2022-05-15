@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.json.JSONWriter;
+
 
 
 
@@ -68,12 +68,7 @@ public void sobreescribirArchivo(ArrayList<Paciente> dataList) throws IOExceptio
          
          jsonList.write(bufferWriter);
          bufferWriter.close();
-         
-         
-         System.out.println("----------------");
-         
-         
-          
+       
     }
     
     

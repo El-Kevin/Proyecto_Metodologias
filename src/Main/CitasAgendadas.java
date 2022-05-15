@@ -18,8 +18,8 @@ public class CitasAgendadas extends CitaMedica {
     private int numeroCitasAgendadas;
     private ArrayList<CitaMedica> citasAgendadas;
 
-    public CitasAgendadas(String especialidad, String fechaEmision, String nombreMedico, String fechaCita, String codigoCita, boolean disponibilidad) {
-        super(especialidad, fechaEmision, nombreMedico, fechaCita, codigoCita, false);
+    public CitasAgendadas(String numeroDeCedula , String especialidad, String fechaEmision, String nombreMedico, String fechaCita, String codigoCita, boolean disponibilidad) {
+        super(numeroDeCedula ,especialidad, fechaEmision, nombreMedico, fechaCita, codigoCita, false);
     }
 
     public int calcularDiasFaltantes() {

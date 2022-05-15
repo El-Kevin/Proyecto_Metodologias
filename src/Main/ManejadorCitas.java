@@ -3,9 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Main;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +22,7 @@ public class ManejadorCitas {
     private String pathCitas;
     
     
-         public ArrayList<CitaMedica> leerArchivoUsuarios() throws FileNotFoundException{
+         public ArrayList<CitaMedica> leerArchivoCitas() throws FileNotFoundException{
         // ScoreData is the array where we can read the core from file
         ArrayList <CitaMedica> citaMedica = new ArrayList<CitaMedica>();
                 File file = new File(pathCitas);
@@ -44,7 +48,7 @@ public class ManejadorCitas {
          }
          return citaMedica;
     }
-    public static  void mostrarCitaEliminada(CitaMedica cm){
+    public void mostrarCitaEliminada(CitaMedica cm){
         System.out.println("La cita medica: ");
         System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
         System.out.println("Fecha de emision del documento: "+ cm.getFechaEmision());
@@ -52,7 +56,7 @@ public class ManejadorCitas {
         System.out.println("Se ha cancelado exitosamente.");
     };
     
-    public static void mostrarCitaAgendada(CitasAgendadas cm){
+    public void mostrarCitaAgendada(CitasAgendadas cm){
         System.out.println("La cita medica: ");
         System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
         System.out.println("Fecha de emision del documento: "+ cm.getFechaEmision());
@@ -60,13 +64,53 @@ public class ManejadorCitas {
         System.out.println("Se ha agendado exitosamente. Restan " +cm.calcularDiasFaltantes() + "");
     };
     
-    public static void reservarCita(){
+    public void reservarCita(){
         
     };
     
-    public static void eliminarCita(){};
+    public void eliminarCita(){};
     
-    public static void sobreEscribirArchivo(){};
+       
+public void sobreescribirArchivo(ArrayList<CitaMedica> dataList) throws IOException{
+        File outputFile = new File(pathCitas);
+        // Create the parent directory
+        outputFile.getParentFile().mkdir();
+        // Create the file into the parent directory
+        outputFile.createNewFile();
+        JSONArray jsonList = new JSONArray();
+        ArrayList<CitaMedica> users = leerArchivoCitas();
+         
+         for (int i = 0; i < users.size(); i++){
+             CitaMedica temp = users.get(i);
+             for (CitaMedica cm : dataList) {
+                 if (cm.getCodigoCita().equals(temp.getCodigoCita())){
+                     users.remove(i);
+                     
+             }
+         }}
+            
+         for (CitaMedica user : dataList){
+             JSONObject jsonObject = new JSONObject();
+//             jsonObject.put("Especialidad", user.getNombre());
+//             jsonObject.put("FechaEmision", user.getApellido());
+//             jsonObject.put("NombreMedico", user.getNumeroCedula());
+//             jsonObject.put("FechaCita", user.getMotivoCita());
+//             jsonObject.put("CodigoCita", user.getClave());
+             //jsonObject.put("Disponibilidad", user.get)
+             
+             
+             
+             
+             jsonList.put(jsonObject);
+         }
+         // Create the buffer to write
+         BufferedWriter bufferWriter = Files.newBufferedWriter(
+         Paths.get(outputFile.toURI()));
+         
+         jsonList.write(bufferWriter);
+         bufferWriter.close();
+       
+    }
     
     
     
