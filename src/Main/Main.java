@@ -26,6 +26,8 @@ public class Main {
         CitaMedica cm1 = new CitasDisponibles("0707079653", "OTORRINOLARINGOLOGIA", "15/05/2022", "Julio Cesar", "17/05/2022", "CIT125");
         CitaMedica cm2 = new CitasDisponibles("1715487921", "FISIOLOGIA", "15/05/2022", "Julio Cesar", "18/05/2022", "CIT126");
         CitaMedica cm3 = new CitasDisponibles("0701422487", "UROLOGIA", "15/05/2022", "Julio Cesar", "21/05/2022", "CIT12");
+        
+
         ArrayList<CitaMedica> citas = new ArrayList<>();
         citas.add(cm1);
         citas.add(cm2);
@@ -36,7 +38,7 @@ public class Main {
 
         ManejadorCitas mc = new ManejadorCitas(directorioCitas);
         mc.sobreescribirArchivo(citas);
-        
+        mc.reservarCita(p1.getNumeroCedula());
         
         ManejadorUsuarios mu = new ManejadorUsuarios(directorio);
         ArrayList<Paciente> pacientes = new ArrayList<>();

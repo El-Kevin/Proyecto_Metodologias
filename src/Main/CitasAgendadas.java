@@ -17,6 +17,22 @@ import java.util.ArrayList;
     private int numeroCitasAgendadas;
     private ArrayList<CitaMedica> citasAgendadas;
 
+    public int getNumeroCitasAgendadas() {
+        return numeroCitasAgendadas;
+    }
+
+    public void setNumeroCitasAgendadas(int numeroCitasAgendadas) {
+        this.numeroCitasAgendadas = numeroCitasAgendadas;
+    }
+
+    public ArrayList<CitaMedica> getCitasAgendadas() {
+        return citasAgendadas;
+    }
+
+    public void setCitasAgendadas(ArrayList<CitaMedica> citasAgendadas) {
+        this.citasAgendadas = citasAgendadas;
+    }
+
     public CitasAgendadas(String numeroDeCedula, String especialidad, String fechaEmision, String nombreMedico, String fechaCita, String codigoCita, boolean disponibilidad) {
         super(numeroDeCedula, especialidad, fechaEmision, nombreMedico, fechaCita, codigoCita, false);
     }
@@ -64,8 +80,17 @@ import java.util.ArrayList;
         }
 
         for (int j = 0; j < citasAgendadas.size(); j++) {
-            System.out.println("\n" + citasAgendadas.get(j));
+            
+             CitaMedica cm = citasAgendadas.get(j);
+            System.out.print("\n" + (j) +".- "                   
+                   );
+      
+        System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
+        System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
+        System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
+        //System.out.println("Se ha agendado exitosamente. Restan " + cm.calcularDiasFaltantes() + "");
         }
+        
 
     }
 }

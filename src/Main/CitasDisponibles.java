@@ -62,7 +62,13 @@ public class CitasDisponibles extends CitaMedica{
         }
          
          for(int j = 0; j<citasDisponibles.size(); j++){
-             System.out.println("\n" + (j+1) +".- " + citasDisponibles.get(j));
+                CitaMedica cm = citasDisponibles.get(j);
+            System.out.print("\n" + (j) +".- "                   
+                   );
+      
+        System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
+        System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
+        System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
          }
         
     }

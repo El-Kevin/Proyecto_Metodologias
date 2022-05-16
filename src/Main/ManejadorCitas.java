@@ -36,7 +36,7 @@ public class ManejadorCitas {
         JSONTokener parser = new JSONTokener(new FileInputStream(file));
         //Initial the JSONArray
         JSONArray jsonList = new JSONArray(parser);
-
+        System.out.println("NUMERO DE REGISTROS TOTALES: " + jsonList.length());
         for (int i = 0; i < jsonList.length(); i++) {
             JSONObject jsonObject = (JSONObject) jsonList.get(i);
             CitaMedica userData = new CitaMedica() {
@@ -69,10 +69,12 @@ public class ManejadorCitas {
         System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
         System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
         System.out.println("Se ha agendado exitosamente. Restan " + cm.calcularDiasFaltantes() + "");
-    };
+    }
+
+    ;
     
     
-    public void reservarCita() throws FileNotFoundException, IOException {
+    public void reservarCita(String numeroDeCedula) throws FileNotFoundException, IOException {
         Scanner sc = new Scanner(System.in);
         ArrayList<CitaMedica> citas = leerArchivoCitas();
         CitasDisponibles cd = new CitasDisponibles();
@@ -81,14 +83,32 @@ public class ManejadorCitas {
         int citaSeleccionada = sc.nextInt();
         ArrayList<CitaMedica> cdl = cd.getCitasDisponibles();
         CitaMedica cms = cdl.get(citaSeleccionada);
+        cms.setNumeroDeCedula(numeroDeCedula);
         cms.setDisponibilidad(false);
         citas.add(cms);
-       
+
         sobreescribirArchivo(citas);
 
-    };
+    }
+
+    ;
     
-    public void eliminarCita() {
+    public void eliminarCita(String numeroDeCedula) throws FileNotFoundException, IOException {
+
+        Scanner sc = new Scanner(System.in);
+        ArrayList<CitaMedica> citas = leerArchivoCitas();
+        CitasAgendadas ca = new CitasAgendadas();
+        ca.visualizarCitasAgendadas(citas);
+        System.out.println("Ingrese el numero de la cita que desea cancelar:");
+        int citaSeleccionada = sc.nextInt();
+        ArrayList<CitaMedica> cdl = ca.getCitasAgendadas();
+        CitaMedica cms = cdl.get(citaSeleccionada);
+         cms.setNumeroDeCedula(numeroDeCedula);
+        cms.setDisponibilidad(true);
+        citas.add(cms);
+
+        sobreescribirArchivo(citas);
+
     }
 
     ;
@@ -115,9 +135,9 @@ public void sobreescribirArchivo(ArrayList<CitaMedica> dataList) throws IOExcept
                 }
             }
         }
-        
+
         for (CitaMedica cm : users) {
-             JSONObject jsonObject = new JSONObject();
+            JSONObject jsonObject = new JSONObject();
 
             jsonObject.put("Especialidad", cm.getEspecialidad());
             jsonObject.put("FechaEmision", cm.getFechaEmision());
@@ -126,12 +146,10 @@ public void sobreescribirArchivo(ArrayList<CitaMedica> dataList) throws IOExcept
             jsonObject.put("CodigoCita", cm.getCodigoCita());
             jsonObject.put("Disponibilidad", cm.isDisponibilidad());
             jsonObject.put("NumeroDeCedula", cm.getNumeroDeCedula());
-            
-            
-            
+
             jsonList.put(jsonObject);
         }
-        
+
         for (CitaMedica user : dataList) {
 
             JSONObject jsonObject = new JSONObject();
