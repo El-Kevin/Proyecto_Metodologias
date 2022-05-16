@@ -19,14 +19,20 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         CLI cli = new CLI();
-
+        String usuario = "";
+        String clave = "";
+        
         Scanner sc = new Scanner(System.in);
         System.out.println("---------------------Sistema gestor de citas de hospital---------------------");
         System.out.println("----------Ingresar sus credenciales----------");
+      
+       while(cli.verificarPaciente(usuario, clave)==false){
         System.out.println("Usuario");
-        String usuario = sc.nextLine();
+        usuario = sc.nextLine();
         System.out.println("Contraseña");
-        String clave = sc.nextLine();
+        clave = sc.nextLine();
+       }
+       
         if(cli.verificarPaciente(usuario, clave)){
             System.out.println("Seleccione una de las siguientes opciones:\n"
                                +"1.- Agendar Cita\n"
