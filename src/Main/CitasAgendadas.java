@@ -26,6 +26,7 @@ import java.util.ArrayList;
         numeroCitasAgendadas = citasAgendadas.size();
     }
     
+   
     
 
     public int calcularDiasFaltantes() {

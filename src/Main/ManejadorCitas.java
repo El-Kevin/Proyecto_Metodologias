@@ -69,29 +69,24 @@ public class ManejadorCitas {
         System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
         System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
         System.out.println("Se ha agendado exitosamente. Restan " + cm.calcularDiasFaltantes() + "");
-    }
-
-    ;
+    };
     
-    public void reservarCita() throws FileNotFoundException  {
+    
+    public void reservarCita() throws FileNotFoundException, IOException {
         Scanner sc = new Scanner(System.in);
         ArrayList<CitaMedica> citas = leerArchivoCitas();
         CitasDisponibles cd = new CitasDisponibles();
         cd.mostrarCitasDisponibles(citas);
-        int citaSeleccionada = sc.nextInt();
-        
-        
-        //cd = getCitasDisponibles();
-        
         System.out.println("Ingrese el numero de la cita que desea agendar:");
-        int cita = sc.nextInt();
-        ArrayList<CitaMedica> cm = new ArrayList<>();
-        //cm.add(cd.get(cita))
-        //sobreescribirArchivo(cm);
+        int citaSeleccionada = sc.nextInt();
+        ArrayList<CitaMedica> cdl = cd.getCitasDisponibles();
+        CitaMedica cms = cdl.get(citaSeleccionada);
+        cms.setDisponibilidad(false);
+        citas.add(cms);
+       
+        sobreescribirArchivo(citas);
 
-    }
-
-    ;
+    };
     
     public void eliminarCita() {
     }
@@ -109,8 +104,8 @@ public void sobreescribirArchivo(ArrayList<CitaMedica> dataList) throws IOExcept
         ArrayList<CitaMedica> users = leerArchivoCitas();
         for (int i = 0; i < users.size(); i++) {
             System.out.println("Cita " + i);
-        
-    }
+
+        }
         for (int i = 0; i < users.size(); i++) {
             CitaMedica temp = users.get(i);
             for (CitaMedica cm : dataList) {
@@ -120,7 +115,23 @@ public void sobreescribirArchivo(ArrayList<CitaMedica> dataList) throws IOExcept
                 }
             }
         }
-            jsonList.put(users);
+        
+        for (CitaMedica cm : users) {
+             JSONObject jsonObject = new JSONObject();
+
+            jsonObject.put("Especialidad", cm.getEspecialidad());
+            jsonObject.put("FechaEmision", cm.getFechaEmision());
+            jsonObject.put("NombreMedico", cm.getNombreMedico());
+            jsonObject.put("FechaCita", cm.getFechaCita());
+            jsonObject.put("CodigoCita", cm.getCodigoCita());
+            jsonObject.put("Disponibilidad", cm.isDisponibilidad());
+            jsonObject.put("NumeroDeCedula", cm.getNumeroDeCedula());
+            
+            
+            
+            jsonList.put(jsonObject);
+        }
+        
         for (CitaMedica user : dataList) {
 
             JSONObject jsonObject = new JSONObject();
