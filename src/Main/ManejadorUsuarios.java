@@ -97,16 +97,17 @@ public void sobreescribirArchivo(ArrayList<Paciente> dataList) throws IOExceptio
          }
          return pacientes;
     }
-    public void comprobarRegistro(String Usuario, String password) throws FileNotFoundException{
+    public Boolean comprobarRegistro(String Usuario, String password) throws FileNotFoundException{
         ArrayList<Paciente> listaPaciente = new ArrayList<>();
         listaPaciente = leerArchivoUsuarios();
         
         for (Paciente User : listaPaciente){
             if(User.getNumeroCedula().equalsIgnoreCase(Usuario) && User.getClave().equalsIgnoreCase(password) ){  
-                System.out.print("Ha ingresado con exito");
-                break;
+      
+                return true;
             }
         }
+        return false;
     }
     
 } 

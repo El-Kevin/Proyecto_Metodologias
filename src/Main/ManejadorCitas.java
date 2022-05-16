@@ -54,7 +54,7 @@ public class ManejadorCitas {
     }
 
     public void mostrarCitaEliminada(CitaMedica cm) {
-        System.out.println("La cita medica: ");
+        System.out.println("\nLa cita medica: ");
         System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
         System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
         System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
@@ -63,12 +63,11 @@ public class ManejadorCitas {
 
     ;
     
-    public void mostrarCitaAgendada(CitasAgendadas cm) {
-        System.out.println("La cita medica: ");
+    public void mostrarCitaAgendada(CitaMedica cm) {
+        System.out.println("\nLa cita medica: ");
         System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
         System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
-        System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
-        System.out.println("Se ha agendado exitosamente. Restan " + cm.calcularDiasFaltantes() + "");
+        System.out.println("Fecha de la cita:" + cm.getFechaCita());
     }
 
     ;
@@ -77,83 +76,66 @@ public class ManejadorCitas {
     public void reservarCita(String numeroDeCedula) throws FileNotFoundException, IOException {
         Scanner sc = new Scanner(System.in);
         ArrayList<CitaMedica> citas = leerArchivoCitas();
+        ArrayList<CitaMedica> citasDisponible = new ArrayList<CitaMedica>();
+        
         CitasDisponibles cd = new CitasDisponibles();
-        cd.mostrarCitasDisponibles(citas);
+        citasDisponible = cd.mostrarCitasDisponibles(citas);
+
         System.out.println("Ingrese el numero de la cita que desea agendar:");
         int citaSeleccionada = sc.nextInt();
-        ArrayList<CitaMedica> cdl = cd.getCitasDisponibles();
-        CitaMedica cms = cdl.get(citaSeleccionada);
-        cms.setNumeroDeCedula(numeroDeCedula);
-        cms.setDisponibilidad(false);
-        citas.add(cms);
-
+        int index = citaSeleccionada;
+        int i = 0;
+        CitasAgendadas ca = new CitasAgendadas();
+        
+        for(CitaMedica cita : citas){
+            
+            if(citasDisponible.get(index).getCodigoCita().equals(cita.getCodigoCita())){
+                citas.get(i).setDisponibilidad(false);
+                mostrarCitaAgendada(citas.get(i));
+            }
+            i++;
+        }
         sobreescribirArchivo(citas);
-
     }
 
-    ;
+    
     
     public void eliminarCita(String numeroDeCedula) throws FileNotFoundException, IOException {
 
         Scanner sc = new Scanner(System.in);
         ArrayList<CitaMedica> citas = leerArchivoCitas();
-        CitasAgendadas ca = new CitasAgendadas();
-        ca.visualizarCitasAgendadas(citas);
+        ArrayList<CitaMedica> citasNoDisponible = new ArrayList<CitaMedica>();
+        
+        CitasAgendadas cd = new CitasAgendadas();
+        citasNoDisponible = cd.visualizarCitasAgendadas(citas, numeroDeCedula);
+
         System.out.println("Ingrese el numero de la cita que desea cancelar:");
         int citaSeleccionada = sc.nextInt();
-        ArrayList<CitaMedica> cdl = ca.getCitasAgendadas();
-        CitaMedica cms = cdl.get(citaSeleccionada);
-         cms.setNumeroDeCedula(numeroDeCedula);
-        cms.setDisponibilidad(true);
-        citas.add(cms);
-
+        int index = citaSeleccionada;
+        int i = 0;
+        for(CitaMedica cita : citas){
+            
+            if(citasNoDisponible.get(index).getCodigoCita().equals(cita.getCodigoCita())){
+                citas.get(i).setDisponibilidad(true);
+                mostrarCitaEliminada(citas.get(i));
+            }
+            i++;
+        }
         sobreescribirArchivo(citas);
 
     }
 
     ;
-    
        
 public void sobreescribirArchivo(ArrayList<CitaMedica> dataList) throws IOException {
         File outputFile = new File(pathCitas);
-        // Create the parent directory
         outputFile.getParentFile().mkdir();
-        // Create the file into the parent directory
         outputFile.createNewFile();
         JSONArray jsonList = new JSONArray();
-        ArrayList<CitaMedica> users = leerArchivoCitas();
-        for (int i = 0; i < users.size(); i++) {
-            System.out.println("Cita " + i);
-
-        }
-        for (int i = 0; i < users.size(); i++) {
-            CitaMedica temp = users.get(i);
-            for (CitaMedica cm : dataList) {
-                if (cm.getCodigoCita().equals(temp.getCodigoCita())) {
-                    users.remove(i);
-
-                }
-            }
-        }
-
-        for (CitaMedica cm : users) {
+        
+        
+        for (CitaMedica user : dataList){
             JSONObject jsonObject = new JSONObject();
-
-            jsonObject.put("Especialidad", cm.getEspecialidad());
-            jsonObject.put("FechaEmision", cm.getFechaEmision());
-            jsonObject.put("NombreMedico", cm.getNombreMedico());
-            jsonObject.put("FechaCita", cm.getFechaCita());
-            jsonObject.put("CodigoCita", cm.getCodigoCita());
-            jsonObject.put("Disponibilidad", cm.isDisponibilidad());
-            jsonObject.put("NumeroDeCedula", cm.getNumeroDeCedula());
-
-            jsonList.put(jsonObject);
-        }
-
-        for (CitaMedica user : dataList) {
-
-            JSONObject jsonObject = new JSONObject();
-
             jsonObject.put("Especialidad", user.getEspecialidad());
             jsonObject.put("FechaEmision", user.getFechaEmision());
             jsonObject.put("NombreMedico", user.getNombreMedico());
@@ -161,16 +143,14 @@ public void sobreescribirArchivo(ArrayList<CitaMedica> dataList) throws IOExcept
             jsonObject.put("CodigoCita", user.getCodigoCita());
             jsonObject.put("Disponibilidad", user.isDisponibilidad());
             jsonObject.put("NumeroDeCedula", user.getNumeroDeCedula());
-
-            jsonList.put(jsonObject);
-        }
-        // Create the buffer to write
-        BufferedWriter bufferWriter = Files.newBufferedWriter(
-                Paths.get(outputFile.toURI()));
-
-        jsonList.write(bufferWriter);
-        bufferWriter.close();
-
+             jsonList.put(jsonObject);
+         }
+         // Create the buffer to write
+         BufferedWriter bufferWriter = Files.newBufferedWriter(
+                 Paths.get(outputFile.toURI()));
+         
+         jsonList.write(bufferWriter);
+         bufferWriter.close();
     }
 
 }

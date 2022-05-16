@@ -72,9 +72,9 @@ import java.util.ArrayList;
 
     }
 
-    public void visualizarCitasAgendadas(ArrayList<CitaMedica> citasMedicas) {
+    public ArrayList<CitaMedica> visualizarCitasAgendadas(ArrayList<CitaMedica> citasMedicas, String cedula) {
         for (int i = 0; i < citasMedicas.size(); i++) {
-            if (citasMedicas.get(i).isDisponibilidad() == true) {
+            if (citasMedicas.get(i).isDisponibilidad() == false && cedula.equals(citasMedicas.get(i).getNumeroDeCedula())) {
                 citasAgendadas.add(citasMedicas.get(i));
             }
         }
@@ -90,7 +90,7 @@ import java.util.ArrayList;
         System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
         //System.out.println("Se ha agendado exitosamente. Restan " + cm.calcularDiasFaltantes() + "");
         }
-        
+        return citasAgendadas;
 
     }
 }

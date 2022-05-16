@@ -54,7 +54,7 @@ public class CitasDisponibles extends CitaMedica{
         
     }
     
-    public void mostrarCitasDisponibles(ArrayList<CitaMedica> citasMedicas){
+    public ArrayList<CitaMedica> mostrarCitasDisponibles(ArrayList<CitaMedica> citasMedicas){
          for(int i = 0; i<citasMedicas.size(); i++){
              if(citasMedicas.get(i).isDisponibilidad() == true){
                  citasDisponibles.add(citasMedicas.get(i));
@@ -70,7 +70,7 @@ public class CitasDisponibles extends CitaMedica{
         System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
         System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
          }
-        
+        return citasDisponibles;
     }
     
 }
