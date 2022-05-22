@@ -46,19 +46,20 @@ import java.util.ArrayList;
     
 
     public int calcularDiasFaltantes() {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        // possible inline temp - refactoring comoposal 3
         String fechaF = super.getFechaCita();
         final LocalDate fechaDestino = LocalDate.parse(fechaF, formatter);
         final LocalDate fechaOrigen = LocalDate.now();
         final long res = ChronoUnit.DAYS.between(fechaOrigen, fechaDestino);
-
+        // inline temp - refactoring composal methods 2
         int dias = (int) res;
         return dias;
 
     }
 
-    public void consultarCitasAgendadas(String cedula, ArrayList<CitaMedica> citasMedicas) {
-
+    public void actualizarCitasAgendadas( ArrayList<CitaMedica> citasMedicas, String cedula) {
+        // Replace method - refactoring composal 4
         for (int i = 0; i < citasMedicas.size(); i++) {
             if (citasMedicas.get(i).isDisponibilidad() == false) {
                 citasAgendadas.add(citasMedicas.get(i));
@@ -73,12 +74,13 @@ import java.util.ArrayList;
     }
 
     public ArrayList<CitaMedica> visualizarCitasAgendadas(ArrayList<CitaMedica> citasMedicas, String cedula) {
-        for (int i = 0; i < citasMedicas.size(); i++) {
-            if (citasMedicas.get(i).isDisponibilidad() == false && cedula.equals(citasMedicas.get(i).getNumeroDeCedula())) {
-                citasAgendadas.add(citasMedicas.get(i));
-            }
-        }
-
+//        for (int i = 0; i < citasMedicas.size(); i++) {
+//            if (citasMedicas.get(i).isDisponibilidad() == false && cedula.equals(citasMedicas.get(i).getNumeroDeCedula())) {
+//                citasAgendadas.add(citasMedicas.get(i));
+//            }
+//        }
+        actualizarCitasAgendadas(citasMedicas, cedula);
+        //Extract method - Refactoring composing methods 5
         for (int j = 0; j < citasAgendadas.size(); j++) {
             
              CitaMedica cm = citasAgendadas.get(j);

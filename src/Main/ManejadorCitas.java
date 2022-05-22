@@ -41,6 +41,7 @@ public class ManejadorCitas {
             JSONObject jsonObject = (JSONObject) jsonList.get(i);
             CitaMedica userData = new CitaMedica() {
             };
+
             userData.setEspecialidad(jsonObject.getString("Especialidad"));
             userData.setFechaEmision(jsonObject.getString("FechaEmision"));
             userData.setNombreMedico(jsonObject.getString("NombreMedico"));
@@ -53,6 +54,8 @@ public class ManejadorCitas {
         return citaMedica;
     }
 
+
+    // Substitute Algorithm - Refactoring composal methods 8
     public void mostrarCitaEliminada(CitaMedica cm) {
         System.out.println("\nLa cita medica: ");
         System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
@@ -72,7 +75,7 @@ public class ManejadorCitas {
 
     ;
     
-    
+    // Subsitute method - Refactoring composal methods 10
     public void reservarCita(String numeroDeCedula) throws FileNotFoundException, IOException {
         Scanner sc = new Scanner(System.in);
         ArrayList<CitaMedica> citas = leerArchivoCitas();
@@ -88,9 +91,10 @@ public class ManejadorCitas {
         CitasAgendadas ca = new CitasAgendadas();
         
         for(CitaMedica cita : citas){
-            
+            //Refactor Extract Variable - Refactoring composal methods 9
             if(citasDisponible.get(index).getCodigoCita().equals(cita.getCodigoCita())){
                 citas.get(i).setDisponibilidad(false);
+                citas.get(i).setNumeroDeCedula(numeroDeCedula);
                 mostrarCitaAgendada(citas.get(i));
             }
             i++;
@@ -117,6 +121,7 @@ public class ManejadorCitas {
             
             if(citasNoDisponible.get(index).getCodigoCita().equals(cita.getCodigoCita())){
                 citas.get(i).setDisponibilidad(true);
+                citas.get(i).setNumeroDeCedula("000000000");
                 mostrarCitaEliminada(citas.get(i));
             }
             i++;

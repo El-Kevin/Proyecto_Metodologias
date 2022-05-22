@@ -41,7 +41,7 @@ public class CitasDisponibles extends CitaMedica{
     
     
     
-    
+    // Replace Method with Method Object - Refactoring methods 6
     public int calcularDiasFaltantes() {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fechaF = super.getFechaCita();
@@ -53,7 +53,7 @@ public class CitasDisponibles extends CitaMedica{
         return dias;
         
     }
-    
+    // Replace Method with Method Object - Refactoring methods 7
     public ArrayList<CitaMedica> mostrarCitasDisponibles(ArrayList<CitaMedica> citasMedicas){
          for(int i = 0; i<citasMedicas.size(); i++){
              if(citasMedicas.get(i).isDisponibilidad() == true){

@@ -29,19 +29,22 @@ public class CLI {
     }
 
     public boolean verificarPaciente(String Usuario, String password) throws FileNotFoundException{
-        if(this.manejadorUsuarios.comprobarRegistro(Usuario, password)== true){
-            System.out.println("Ha ingresado el sistema exitosamente");
+        //In-line method - Refactoring compose method 1
+        if(this.manejadorUsuarios.comprobarRegistro(Usuario, password)){
+           // System.out.println("Ha ingresado el sistema exitosamente");
             return true;
         }else{
-            System.out.println("Error al ingresar las credenciales");
+            //System.out.println("Error al ingresar las credenciales");
             return false;
         }
     }
     public void agendarCita(String numeroDeCedula) throws IOException{
+
         manejadorCita.reservarCita(numeroDeCedula);
         
     }
     public void cancelarCita(String numeroDeCedula) throws IOException{
+
         manejadorCita.eliminarCita(numeroDeCedula);
         
     }
