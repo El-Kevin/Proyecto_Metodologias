@@ -57,44 +57,34 @@ public class ManejadorCitas {
         return citaMedica;
     }
 
-
     // Substitute Algorithm - Refactoring composal methods 8
-    public void mostrarCitaEliminada(CitaMedica cm) {
+    public void mostrarCita(CitaMedica cm) {
         System.out.println("\nLa cita medica: ");
         System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
         System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
-        System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
-        System.out.println("Se ha cancelado exitosamente.");
+        System.out.println("Fecha de la cita: " + cm.getFechaCita());
+
     }
 
     ;
-    
-    public void mostrarCitaAgendada(CitaMedica cm) {
-        System.out.println("\nLa cita medica: ");
-        System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
-        System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
-        System.out.println("Fecha de la cita:" + cm.getFechaCita());
-    }
-
-    ;
-    
-    
+   
     public int calcularDiasFaltantes(CitaMedica cita) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         // Refactor 2
         final LocalDate fechaDestino = LocalDate.parse(cita.getFechaCita(), formatter);
         final LocalDate fechaOrigen = LocalDate.now();
         final long res = ChronoUnit.DAYS.between(fechaOrigen, fechaDestino);
-        // Refactor 3
+
         return (int) res;
+
+        // Refactor 3
     }
-    
-    // Subsitute method - Refactoring composal methods 10
+
     public void reservarCita(String numeroDeCedula) throws FileNotFoundException, IOException {
         Scanner sc = new Scanner(System.in);
         ArrayList<CitaMedica> citas = leerArchivoCitas();
         ArrayList<CitaMedica> citasDisponible = new ArrayList<CitaMedica>();
-        
+
         CitasDisponibles cd = new CitasDisponibles();
         citasDisponible = cd.mostrarCitasDisponibles(citas);
 
@@ -103,27 +93,31 @@ public class ManejadorCitas {
         int index = citaSeleccionada;
         int i = 0;
         CitasAgendadas ca = new CitasAgendadas();
-        
-        for(CitaMedica cita : citas){
+        //Reempazando las partes de la expresion if en variables separadas
+        final String auxCodCita = citasDisponible.get(index).getCodigoCita();
+        for (CitaMedica cita : citas) {
             //Refactor Extract Variable - Refactoring composal methods 9
-            if(citasDisponible.get(index).getCodigoCita().equals(cita.getCodigoCita())){
+            //Reempazando las partes de la expresion if en variables separadas
+            final String codCita = cita.getCodigoCita();
+
+            //Creando condicional más sencilla de entender
+            if (auxCodCita.equals(codCita)) {
                 citas.get(i).setDisponibilidad(false);
                 citas.get(i).setNumeroDeCedula(numeroDeCedula);
-                mostrarCitaAgendada(citas.get(i));
+                mostrarCita(citas.get(i));
+                System.out.print("Quedan " + calcularDiasFaltantes(cita) + " días para su cita\n");
             }
             i++;
         }
         sobreescribirArchivo(citas);
     }
 
-    
-    
     public void eliminarCita(String numeroDeCedula) throws FileNotFoundException, IOException {
 
         Scanner sc = new Scanner(System.in);
         ArrayList<CitaMedica> citas = leerArchivoCitas();
         ArrayList<CitaMedica> citasNoDisponible = new ArrayList<CitaMedica>();
-        
+
         CitasAgendadas cd = new CitasAgendadas();
         citasNoDisponible = cd.visualizarCitasAgendadas(citas, numeroDeCedula);
 
@@ -131,12 +125,19 @@ public class ManejadorCitas {
         int citaSeleccionada = sc.nextInt();
         int index = citaSeleccionada;
         int i = 0;
-        for(CitaMedica cita : citas){
-            
-            if(citasNoDisponible.get(index).getCodigoCita().equals(cita.getCodigoCita())){
+        //Reempazando las partes de la expresion if en variables separadas
+        final String auxCodCita = citasNoDisponible.get(index).getCodigoCita();
+        for (CitaMedica cita : citas) {
+
+            //Reempazando las partes de la expresion if en variables separadas
+            final String codCita = cita.getCodigoCita();
+
+            //Creando condicional más sencilla de entender
+            if (auxCodCita.equals(codCita)) {
                 citas.get(i).setDisponibilidad(true);
                 citas.get(i).setNumeroDeCedula("000000000");
-                mostrarCitaEliminada(citas.get(i));
+                mostrarCita(citas.get(i));
+                System.out.println("Se ha cancelado exitosamente");
             }
             i++;
         }
@@ -151,9 +152,8 @@ public void sobreescribirArchivo(ArrayList<CitaMedica> dataList) throws IOExcept
         outputFile.getParentFile().mkdir();
         outputFile.createNewFile();
         JSONArray jsonList = new JSONArray();
-        
-        
-        for (CitaMedica user : dataList){
+
+        for (CitaMedica user : dataList) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("Especialidad", user.getEspecialidad());
             jsonObject.put("FechaEmision", user.getFechaEmision());
@@ -162,14 +162,14 @@ public void sobreescribirArchivo(ArrayList<CitaMedica> dataList) throws IOExcept
             jsonObject.put("CodigoCita", user.getCodigoCita());
             jsonObject.put("Disponibilidad", user.isDisponibilidad());
             jsonObject.put("NumeroDeCedula", user.getNumeroDeCedula());
-             jsonList.put(jsonObject);
-         }
-         // Create the buffer to write
-         BufferedWriter bufferWriter = Files.newBufferedWriter(
-                 Paths.get(outputFile.toURI()));
-         
-         jsonList.write(bufferWriter);
-         bufferWriter.close();
+            jsonList.put(jsonObject);
+        }
+        // Create the buffer to write
+        BufferedWriter bufferWriter = Files.newBufferedWriter(
+                Paths.get(outputFile.toURI()));
+
+        jsonList.write(bufferWriter);
+        bufferWriter.close();
     }
 
 }
