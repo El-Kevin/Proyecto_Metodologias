@@ -56,7 +56,7 @@ public class CitasDisponibles extends CitaMedica{
     // Replace Method with Method Object - Refactoring methods 7
     public ArrayList<CitaMedica> mostrarCitasDisponibles(ArrayList<CitaMedica> citasMedicas){
          for(int i = 0; i<citasMedicas.size(); i++){
-             if(citasMedicas.get(i).isDisponibilidad()){
+             if(citasMedicas.get(i).isDisponibilidad() == true){
                  citasDisponibles.add(citasMedicas.get(i));
              }
         }

@@ -45,47 +45,34 @@ import java.util.ArrayList;
    
     
 
-    public int calcularDiasFaltantes() {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
-
-        // Refactor 2
-        final LocalDate fechaDestino = LocalDate.parse(super.getFechaCita(), formatter);
-        final LocalDate fechaOrigen = LocalDate.now();
-        final long res = ChronoUnit.DAYS.between(fechaOrigen, fechaDestino);
-        // Refactor 3
-        return (int) res;
-    }
+    
 
     public void actualizarCitasAgendadas( ArrayList<CitaMedica> citasMedicas, String cedula) {
         // Refactor 4
         for (int i = 0; i < citasMedicas.size(); i++) {
             if (!citasMedicas.get(i).isDisponibilidad() && cedula.equals(citasMedicas.get(i).getNumeroDeCedula())) {
-                citasAgendadas.add(citasMedicas.get(i));
+                this.citasAgendadas.add(citasMedicas.get(i));
             }
         }
 
     }
 
     public ArrayList<CitaMedica> visualizarCitasAgendadas(ArrayList<CitaMedica> citasMedicas, String cedula) {
-//        for (int i = 0; i < citasMedicas.size(); i++) {
-//            if (citasMedicas.get(i).isDisponibilidad() == false && cedula.equals(citasMedicas.get(i).getNumeroDeCedula())) {
-//                citasAgendadas.add(citasMedicas.get(i));
-//            }
-//        }
         actualizarCitasAgendadas(citasMedicas, cedula);
-        //Extract method - Refactoring composing methods 5
-        for (int j = 0; j < citasAgendadas.size(); j++) {
-            
-             CitaMedica cm = citasAgendadas.get(j);
-            System.out.print("\n" + (j) +".- "                   
-                   );
-      
-        System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
-        System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
-        System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
-        //System.out.println("Se ha agendado exitosamente. Restan " + cm.calcularDiasFaltantes() + "");
-        }
+        imprimirListaCitasAgendadas();
         return citasAgendadas;
-
+    }
+    
+    public void imprimirListaCitasAgendadas(){
+    //Extract method - Refactoring composing methods 5
+        for (int j = 0; j < this.citasAgendadas.size(); j++) {
+            
+            CitaMedica cm = citasAgendadas.get(j);
+            System.out.print("\n" + (j) +".- ");
+            System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
+            System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
+            System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
+        }
+        
     }
 }

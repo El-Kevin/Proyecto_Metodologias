@@ -7,6 +7,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 import org.json.JSONArray;
@@ -75,6 +78,17 @@ public class ManejadorCitas {
 
     ;
     
+    
+    public int calcularDiasFaltantes(CitaMedica cita) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        // Refactor 2
+        final LocalDate fechaDestino = LocalDate.parse(cita.getFechaCita(), formatter);
+        final LocalDate fechaOrigen = LocalDate.now();
+        final long res = ChronoUnit.DAYS.between(fechaOrigen, fechaDestino);
+        // Refactor 3
+        return (int) res;
+    }
+    
     // Subsitute method - Refactoring composal methods 10
     public void reservarCita(String numeroDeCedula) throws FileNotFoundException, IOException {
         Scanner sc = new Scanner(System.in);
@@ -91,6 +105,7 @@ public class ManejadorCitas {
         CitasAgendadas ca = new CitasAgendadas();
         
         for(CitaMedica cita : citas){
+            
             //Refactor Extract Variable - Refactoring composal methods 9
             if(citasDisponible.get(index).getCodigoCita().equals(cita.getCodigoCita())){
                 citas.get(i).setDisponibilidad(false);
