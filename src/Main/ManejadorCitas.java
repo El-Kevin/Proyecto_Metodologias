@@ -105,6 +105,7 @@ public class ManejadorCitas {
         CitasAgendadas ca = new CitasAgendadas();
         
         for(CitaMedica cita : citas){
+            
             //Refactor Extract Variable - Refactoring composal methods 9
             if(citasDisponible.get(index).getCodigoCita().equals(cita.getCodigoCita())){
                 citas.get(i).setDisponibilidad(false);
