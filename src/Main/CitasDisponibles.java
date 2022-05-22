@@ -1,9 +1,7 @@
 
 package Main;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+
 import java.util.ArrayList;
 
 /**
@@ -41,18 +39,7 @@ public class CitasDisponibles extends CitaMedica{
     
     
     
-    // Replace Method with Method Object - Refactoring methods 6
-    public int calcularDiasFaltantes() {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fechaF = super.getFechaCita();
-        final LocalDate fechaDestino = LocalDate.parse(fechaF, formatter);
-        final LocalDate fechaOrigen = LocalDate.now();
-        final long res = ChronoUnit.DAYS.between(fechaOrigen, fechaDestino);
-        
-        int dias = (int) res;
-        return dias;
-        
-    }
+   
     // Replace Method with Method Object - Refactoring methods 7
     public ArrayList<CitaMedica> mostrarCitasDisponibles(ArrayList<CitaMedica> citasMedicas){
          for(int i = 0; i<citasMedicas.size(); i++){

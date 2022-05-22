@@ -7,6 +7,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 import org.json.JSONArray;
@@ -74,6 +77,16 @@ public class ManejadorCitas {
     }
 
     ;
+    
+     // Replace Method with Method Object - Refactoring methods 6
+    public int calcularDiasFaltantes(CitaMedica cita) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fechaF = cita.getFechaCita();
+        final LocalDate fechaDestino = LocalDate.parse(fechaF, formatter);
+        final LocalDate fechaOrigen = LocalDate.now();
+        final long res = ChronoUnit.DAYS.between(fechaOrigen, fechaDestino);
+        return (int) res;
+    }
     
     // Subsitute method - Refactoring composal methods 10
     public void reservarCita(String numeroDeCedula) throws FileNotFoundException, IOException {
