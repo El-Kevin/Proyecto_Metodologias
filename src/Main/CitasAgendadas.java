@@ -65,9 +65,9 @@ import java.util.ArrayList;
     
     public void imprimirListaCitasAgendadas(){
     //Extract method - Refactoring composing methods 5
-        for (int j = 0; j < rhis.citasAgendadas.size(); j++) {
+        for (int j = 0; j < this.citasAgendadas.size(); j++) {
             
-             CitaMedica cm = citasAgendadas.get(j);
+            CitaMedica cm = citasAgendadas.get(j);
             System.out.print("\n" + (j) +".- ");
             System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
             System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
