@@ -45,15 +45,7 @@ import java.util.ArrayList;
    
     
 
-    public int calcularDiasFaltantes() {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
-        // Refactor 2
-        final LocalDate fechaDestino = LocalDate.parse(super.getFechaCita(), formatter);
-        final LocalDate fechaOrigen = LocalDate.now();
-        final long res = ChronoUnit.DAYS.between(fechaOrigen, fechaDestino);
-        // Refactor 3
-        return (int) res;
-    }
+    
 
     public void actualizarCitasAgendadas( ArrayList<CitaMedica> citasMedicas, String cedula) {
         // Refactor 4

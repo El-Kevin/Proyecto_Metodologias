@@ -78,13 +78,14 @@ public class ManejadorCitas {
 
     ;
     
-     // Replace Method with Method Object - Refactoring methods 6
+    
     public int calcularDiasFaltantes(CitaMedica cita) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String fechaF = cita.getFechaCita();
-        final LocalDate fechaDestino = LocalDate.parse(fechaF, formatter);
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        // Refactor 2
+        final LocalDate fechaDestino = LocalDate.parse(cita.getFechaCita(), formatter);
         final LocalDate fechaOrigen = LocalDate.now();
         final long res = ChronoUnit.DAYS.between(fechaOrigen, fechaDestino);
+        // Refactor 3
         return (int) res;
     }
     

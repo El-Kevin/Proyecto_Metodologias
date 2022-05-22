@@ -42,22 +42,24 @@ public class CitasDisponibles extends CitaMedica{
    
     // Replace Method with Method Object - Refactoring methods 7
     public ArrayList<CitaMedica> mostrarCitasDisponibles(ArrayList<CitaMedica> citasMedicas){
-         for(int i = 0; i<citasMedicas.size(); i++){
+        for(int i = 0; i<citasMedicas.size(); i++){
              if(citasMedicas.get(i).isDisponibilidad() == true){
                  citasDisponibles.add(citasMedicas.get(i));
              }
         }
-         
-         for(int j = 0; j<citasDisponibles.size(); j++){
-                CitaMedica cm = citasDisponibles.get(j);
-            System.out.print("\n" + (j) +".- "                   
-                   );
-      
-        System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
-        System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
-        System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
-         }
+        imprimirCitasDisponibles();
         return citasDisponibles;
+    }
+    
+    public void imprimirCitasDisponibles(){
+        for(int j = 0; j<citasDisponibles.size(); j++){
+            CitaMedica cm = citasDisponibles.get(j);
+            System.out.print("\n" + (j) +".- ");
+            System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
+            System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
+            System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
+         }
+    
     }
     
 }
