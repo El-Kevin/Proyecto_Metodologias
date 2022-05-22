@@ -8,18 +8,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- *
  * @author HOME
  */
 public class CLI {
-    
+
     private boolean claveAutenticada;
 
     private CitaMedica citaMedica;
-    String directorio = System.getProperty("user.dir") + "\\src\\resources\\data.json";
+    String directorioUsuarios = System.getProperty("user.dir") + "\\src\\resources\\data.json";
     String directorioCitas = System.getProperty("user.dir") + "\\src\\resources\\citas_data.json";
-    ManejadorCitas manejadorCita= new ManejadorCitas(directorioCitas);
-    ManejadorUsuarios manejadorUsuarios= new ManejadorUsuarios(directorio);
+    ManejadorCitas manejadorCita = new ManejadorCitas(directorioCitas);
+    ManejadorUsuarios manejadorUsuarios = new ManejadorUsuarios(directorioUsuarios);
+
     public CLI() {
     }
 
@@ -28,24 +28,25 @@ public class CLI {
         this.citaMedica = citaMedica;
     }
 
-    public boolean verificarPaciente(String Usuario, String password) throws FileNotFoundException{
-        //In-line method - Refactoring compose method 1
-        if(this.manejadorUsuarios.comprobarRegistro(Usuario, password)){
-           // System.out.println("Ha ingresado el sistema exitosamente");
-            return true;
-        }else{
-            //System.out.println("Error al ingresar las credenciales");
-            return false;
-        }
+
+    //Refactor 1
+    public boolean verificarPaciente(String usuario, String password) throws FileNotFoundException {
+
+        return this.manejadorUsuarios.comprobarRegistro(usuario, password);
+
     }
-    public void agendarCita(String numeroDeCedula) throws IOException{
+
+    ;
+
+    public void agendarCita(String numeroDeCedula) throws IOException {
 
         manejadorCita.reservarCita(numeroDeCedula);
-        
+
     }
-    public void cancelarCita(String numeroDeCedula) throws IOException{
+
+    public void cancelarCita(String numeroDeCedula) throws IOException {
 
         manejadorCita.eliminarCita(numeroDeCedula);
-        
+
     }
 }

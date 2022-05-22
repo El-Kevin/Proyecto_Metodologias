@@ -47,28 +47,21 @@ import java.util.ArrayList;
 
     public int calcularDiasFaltantes() {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
-        // possible inline temp - refactoring comoposal 3
-        String fechaF = super.getFechaCita();
-        final LocalDate fechaDestino = LocalDate.parse(fechaF, formatter);
+
+        // Refactor 2
+        final LocalDate fechaDestino = LocalDate.parse(super.getFechaCita(), formatter);
         final LocalDate fechaOrigen = LocalDate.now();
         final long res = ChronoUnit.DAYS.between(fechaOrigen, fechaDestino);
-        // inline temp - refactoring composal methods 2
-        int dias = (int) res;
-        return dias;
-
+        // Refactor 3
+        return (int) res;
     }
 
     public void actualizarCitasAgendadas( ArrayList<CitaMedica> citasMedicas, String cedula) {
-        // Replace method - refactoring composal 4
+        // Refactor 4
         for (int i = 0; i < citasMedicas.size(); i++) {
-            if (citasMedicas.get(i).isDisponibilidad() == false) {
+            if (!citasMedicas.get(i).isDisponibilidad() && cedula.equals(citasMedicas.get(i).getNumeroDeCedula())) {
                 citasAgendadas.add(citasMedicas.get(i));
-                if (cedula.equals(super.getNumeroDeCedula())) {
-                    System.out.println("\n" + citasAgendadas.get(i));
-
-                }
             }
-
         }
 
     }

@@ -26,11 +26,15 @@ public class Main {
         System.out.println("---------------------Sistema gestor de citas de hospital---------------------");
         System.out.println("----------Ingresar sus credenciales----------");
       
-       while(cli.verificarPaciente(usuario, clave)==false){
+       while(!cli.verificarPaciente(usuario, clave)){
         System.out.println("Usuario");
         usuario = sc.nextLine();
         System.out.println("Contraseña");
         clave = sc.nextLine();
+
+        if (cli.verificarPaciente(usuario,clave)) {
+
+        }
        }
        
         if(cli.verificarPaciente(usuario, clave)){
