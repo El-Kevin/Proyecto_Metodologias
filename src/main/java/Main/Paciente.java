@@ -12,24 +12,24 @@ public class Paciente {
      private String numeroCedula;
     private String nombre;
     private String apellido;
-    private String aectorDeVivienda;
+    private String sectorDeVivienda;
     private String motivoCita;
     private String clave;
 
     public Paciente() {
         this.numeroCedula = "";
-        this.aectorDeVivienda = "";
+        this.sectorDeVivienda = "";
         this.motivoCita = "";
         this.clave = "";
         this.nombre = "";
         this.apellido = "";
     }
 
-    public Paciente(String numeroCedula, String nombre, String apellido, String aectorDeVivienda, String motivoCita, String clave) {
+    public Paciente(String numeroCedula, String nombre, String apellido, String sectorDeVivienda, String motivoCita, String clave) {
         this.numeroCedula = numeroCedula;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.aectorDeVivienda = aectorDeVivienda;
+        this.sectorDeVivienda = sectorDeVivienda;
         this.motivoCita = motivoCita;
         this.clave = clave;
     }
@@ -58,12 +58,12 @@ public class Paciente {
         this.apellido = apellido;
     }
 
-    public String getAectorDeVivienda() {
-        return aectorDeVivienda;
+    public String getSectorDeVivienda() {
+        return sectorDeVivienda;
     }
 
-    public void setAectorDeVivienda(String aectorDeVivienda) {
-        this.aectorDeVivienda = aectorDeVivienda;
+    public void setSectorDeVivienda(String sectorDeVivienda) {
+        this.sectorDeVivienda = sectorDeVivienda;
     }
 
     public String getMotivoCita() {

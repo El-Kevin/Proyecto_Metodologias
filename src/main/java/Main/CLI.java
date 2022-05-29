@@ -31,8 +31,8 @@ public class CLI {
 
     //Refactor 1
     public boolean verificarPaciente(String usuario, String password) throws FileNotFoundException {
-
-        return this.manejadorUsuarios.comprobarRegistro(usuario, password);
+        LogIn login = new LogIn();
+        return true;//login.;
 
     }
 
