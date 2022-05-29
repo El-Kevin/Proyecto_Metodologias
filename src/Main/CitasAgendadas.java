@@ -50,7 +50,11 @@ import java.util.ArrayList;
     public void actualizarCitasAgendadas( ArrayList<CitaMedica> citasMedicas, String cedula) {
         // Refactor 4
         for (int i = 0; i < citasMedicas.size(); i++) {
-            if (!citasMedicas.get(i).isDisponibilidad() && cedula.equals(citasMedicas.get(i).getNumeroDeCedula())) {
+            // Reemplazando las partes de la expresión if en variables separadas
+            final boolean citaNoDisponible = !citasMedicas.get(i).isDisponibilidad(); 
+            final boolean cedulaCoincide = cedula.equals(citasMedicas.get(i).getNumeroDeCedula());
+            // Expresion simplificada
+            if (citaNoDisponible && cedulaCoincide) {
                 this.citasAgendadas.add(citasMedicas.get(i));
             }
         }
@@ -63,15 +67,15 @@ import java.util.ArrayList;
         return citasAgendadas;
     }
     
-    public void imprimirListaCitasAgendadas(){
+    public void imprimirListaCitasAgendadas() {
     //Extract method - Refactoring composing methods 5
         for (int j = 0; j < this.citasAgendadas.size(); j++) {
             
             CitaMedica cm = citasAgendadas.get(j);
             System.out.print("\n" + (j) +".- ");
             System.out.println("Nombre de cedula del solicitante: " + cm.getNumeroDeCedula());
-            System.out.println("Fecha de emision del documento: " + cm.getFechaEmision());
-            System.out.println("Fecha de la cita cancelada:" + cm.getFechaCita());
+            System.out.println("Fecha de emision del documento:" + cm.getFechaEmision());
+            System.out.println("Fecha de la cita:" + cm.getFechaCita());
         }
         
     }
