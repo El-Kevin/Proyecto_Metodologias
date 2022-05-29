@@ -28,11 +28,8 @@ public class LogIn {
     }
 
     public boolean validarCorreoElectronico(Paciente paciente ) {
-        metodosConfirmacion[] mc = new metodosConfirmacion[2];
-        mc[0] = metodosConfirmacion.whatsapp;
-        mc[1] = metodosConfirmacion.sms;
-    //validar que la direccion de email sea correcta
-     return true;
+
+     return false;
     }
     public String obtenerPasswordActual(Paciente p){
 
