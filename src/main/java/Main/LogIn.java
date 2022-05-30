@@ -1,6 +1,7 @@
 package Main;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -14,12 +15,32 @@ enum estadoCampos {
 public class LogIn {
     private String directorioUsuarios = System.getProperty("user.dir") + "/src/main/java/resources/data.json";
                                                                         /*/src/main/java/resources/data.json*/
-
+private Paciente p = new Paciente("0707079653", "Anthony", "Chamba",
+                     "La Ferroviaria", "Obstetricia", "2020");
 
 
     private ManejadorUsuarios manejadorUsuarios = new ManejadorUsuarios(directorioUsuarios);
 
+    public boolean iniciarSesion(String usuario, String password) throws FileNotFoundException {
+       return (verificarCamposEnArchivos(usuario, password) == estadoCampos.registrado && this.comprobarRegistro(usuario, password));}
+    public void cambiarContraseña(String usuario, String password) throws FileNotFoundException, IOException {
+        if(comprobarRegistro(usuario, password)){
+            validarCorreoElectronico(this.p);
+            String actual = obtenerPasswordActual(this.p);
+            String nueva = obtenerPasswordNueva();
+            if (!actual.equals(nueva)) {
+                ArrayList<Paciente> pacientes = manejadorUsuarios.leerArchivoUsuarios();
+                for (Paciente p : pacientes) {
+                    if (p.getNumeroCedula() == usuario) {
+                        p.setClave(nueva);
+                    }
+                }
+                manejadorUsuarios.sobreescribirArchivo(pacientes);
+            }
+            enviarMensajeConfirmacion(this.p);
 
+        }
+    };
 
     public boolean comprobarRegistro(String usuario, String password) throws FileNotFoundException {
        //Refactor 1
