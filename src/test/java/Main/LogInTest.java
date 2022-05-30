@@ -3,6 +3,7 @@ package Main;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -18,12 +19,14 @@ public class LogInTest {
     }
         //Unit test 1
         @Test
-        public void given_0707079653_2020_when_compruebaRegistro_thenTrue () {
+        public void given_0707079653_2020_when_compruebaRegistro_thenTrue () throws FileNotFoundException {
            //LogIn login = new LogIn();
-           String usuario = "0707079653";
-           String password =  "2020";
-           boolean actual = login.comprobarRegistro(usuario, password);
-           assertTrue(actual);
+
+
+            boolean actual = login.comprobarRegistro(paciente.getNumeroCedula(), paciente.getClave());
+
+
+           assertTrue( actual);
 
         };
 
@@ -38,7 +41,7 @@ public class LogInTest {
 
     //Unit test 3
     @Test
-        public void given_0707079653_2020_when_verificaCamposEnArchivos_thenOk(){
+        public void given_0707079653_2020_when_verificaCamposEnArchivos_thenOk() throws FileNotFoundException {
         estadoCampos actual = login.verificarCamposEnArchivos("0707079653", "2020");
         assertNotNull(actual);
     }
@@ -60,11 +63,35 @@ public class LogInTest {
         assertNotSame(notExpected, actual);
     }
 
+    // Unit test 6
+
+    @Test(timeout = 10000)
+
+    public void given_correoElectronico_when_enviarMensajeConfirmacion_thenok() {
+        boolean confirmado = login.enviarMensajeConfirmacion(paciente);
+        assertNotNull(confirmado);
+    }
+    // Unit test 7
+    @Test(expected = FileNotFoundException.class)
+    public void given_path_when_compruebaRegistro_thenok() throws FileNotFoundException {
+        boolean foundFile = login.comprobarRegistro("0707079653", "2020");
+        assertTrue(foundFile);
+    }
+
+    // Unit test 8
+
+    public void given_datosPaciente_when_preguntasDeSeguridad_thenOk(){
+        String [] datosPaciente = login.preguntarDatos(paciente);
+        String [] datosActuales = new String[3];
+        datosActuales[0] = paciente.getNombre();
+        datosActuales[1] = paciente.getApellido();
+        datosActuales[2] = paciente.getSectorDeVivienda();
+
+        assertArrayEquals(datosPaciente,datosActuales);
+
+    }
 
 
-
-
-    //Prueba de excepcion y timeout con correo electronico e ingreso al archivo
 
 
 

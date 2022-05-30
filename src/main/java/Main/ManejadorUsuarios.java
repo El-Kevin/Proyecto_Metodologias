@@ -78,6 +78,7 @@ public void sobreescribirArchivo(ArrayList<Paciente> dataList) throws IOExceptio
         File file = new File(pathUsuarios);
         // If the file is empty or is not exist return the dataList
         if (!file.exists() || file.length() == 0) {
+            System.out.println("File does not exist");
             return pacientes;
         }
         // Start to parser
