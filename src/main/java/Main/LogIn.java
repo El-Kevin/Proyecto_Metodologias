@@ -12,50 +12,40 @@ enum estadoCampos {
 }
 
 public class LogIn {
-    private String directorioUsuarios = System.getProperty("user.dir") + "\\src\\main\\java\\resources\\data.json";
+    private String directorioUsuarios = System.getProperty("user.dir") + "/src/main/java/resources/data.json";
                                                                         /*/src/main/java/resources/data.json*/
-    private String directorioCitas = System.getProperty("user.dir") + "\\src\\main\\java\\resources\\citas_data.json";
 
 
-    private ManejadorCitas manejadorCita = new ManejadorCitas(directorioCitas);
+
     private ManejadorUsuarios manejadorUsuarios = new ManejadorUsuarios(directorioUsuarios);
 
-    //this.manejadorUsuarios.comprobarRegistro(usuario, password)
+
 
     public boolean comprobarRegistro(String usuario, String password) throws FileNotFoundException {
-        estadoCampos estado =  verificarCamposEnArchivos(usuario, password);
-        if (estado == estadoCampos.registrado) {
-                return this.manejadorUsuarios.comprobarRegistro(usuario, password);
-
+       //Refactor 1
+        if (verificarCamposEnArchivos(usuario, password) == estadoCampos.registrado) {
+            return this.manejadorUsuarios.comprobarRegistro(usuario, password);
         }
         else {
-            System.out.println(System.getProperty("user.dir") + "\\src\\main\\java\\resources\\data.json");
             System.out.println("El paciente no se encuentra registrado");
         }
-        //refactor 1 extract varible
 
         return false;
     }
 
     public String recuperarContrasenia(String usuario) {
-        //refactor 2 inline method
-        String contraseniaPorDefecto = "Uv-" + usuario;
-        return contraseniaPorDefecto;
+        //refactor 2
+        return "Uv-" + usuario;
     }
 
     public estadoCampos verificarCamposEnArchivos(String usuario, String password) throws FileNotFoundException {
-        System.out.println("In method verificarCamposEnArchivos");
-        ArrayList<Paciente> lista = manejadorUsuarios.leerArchivoUsuarios();
-        System.out.println("lista.length = " + lista.size());
-            for (Paciente p : lista) {
-                System.out.println("In method for loop");
-                if (p.getNumeroCedula().equals(usuario)) {
-                    System.out.println("In method conditional");
-                    return estadoCampos.registrado;
 
+        ArrayList<Paciente> lista = manejadorUsuarios.leerArchivoUsuarios();
+            for (Paciente p : lista) {
+                if (p.getNumeroCedula().equals(usuario)) {
+                    return estadoCampos.registrado;
                 }
             }
-
 
         return estadoCampos.noRegistrado;
     }
@@ -68,26 +58,21 @@ public class LogIn {
 
 
         String email = paciente.getNombre().toLowerCase() + "." + paciente.getApellido().toLowerCase() + paciente.getNumeroCedula().substring(6) + "@msp.gob.ec";
-
+        System.out.println("Email del paciente :  " + email );
         Matcher mather = pattern.matcher(email);
-
-        if (mather.find() == true) {
-            return true;
-        } else {
-            return false;
-        }
+    //refactor 3
+        return mather.find();
 
     }
 
-    // 6
+
     public boolean enviarMensajeConfirmacion(Paciente paciente) {
-        //Refactor 4
+        //refactor 4
         int min_val = 10;
-        int max_val = 1200;
+        int max_val = 999;
         double randomTime = Math.random() * ( max_val - min_val );
-        int randomTimeAsInt = (int) randomTime;
         try {
-            Thread.sleep(randomTimeAsInt);
+            Thread.sleep((int) randomTime);
             System.out.println("Mensaje de confirmacion enviado con exito");
             return true;
 
@@ -101,6 +86,13 @@ public class LogIn {
     // 5
     public String obtenerPasswordActual(Paciente p) {
         return p.getClave();
+    }
+
+    public String obtenerPasswordNueva() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese la nueva contrasenia");
+        String nueva = scanner.nextLine();
+        return nueva;
     }
 
     public String[] preguntarDatos(Paciente p) {

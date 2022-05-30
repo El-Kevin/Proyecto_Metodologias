@@ -81,6 +81,7 @@ public void sobreescribirArchivo(ArrayList<Paciente> dataList) throws IOExceptio
             System.out.println("File does not exist");
             return pacientes;
         }
+
         // Start to parser
         JSONTokener parser = new JSONTokener(new FileInputStream(file));
         //Initial the JSONArray

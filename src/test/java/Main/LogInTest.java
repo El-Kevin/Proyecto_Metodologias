@@ -1,5 +1,6 @@
 package Main;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,13 +21,9 @@ public class LogInTest {
         //Unit test 1
         @Test
         public void given_0707079653_2020_when_compruebaRegistro_thenTrue () throws FileNotFoundException {
-           //LogIn login = new LogIn();
-
 
             boolean actual = login.comprobarRegistro(paciente.getNumeroCedula(), paciente.getClave());
-
-
-           assertTrue( actual);
+            assertTrue( actual);
 
         };
 
@@ -58,8 +55,8 @@ public class LogInTest {
     @Test()
     public void given_2020_2022_when_comparaPasswords_then_no(){
 
-        String actual = login.obtenerPasswordActual(paciente);
-        String notExpected = "2020";
+        String notExpected = login.obtenerPasswordActual(paciente);
+        String actual = "2022";
         assertNotSame(notExpected, actual);
     }
 
@@ -72,16 +69,22 @@ public class LogInTest {
         assertNotNull(confirmado);
     }
     // Unit test 7
-    @Test(expected = FileNotFoundException.class)
+    @Test(expected = AssertionError.class)
     public void given_path_when_compruebaRegistro_thenok() throws FileNotFoundException {
-        boolean foundFile = login.comprobarRegistro("0707079653", "2020");
+        String baseDir = System.getProperty("user.dir");
+        ManejadorUsuarios mu = new ManejadorUsuarios(baseDir + "/src/main/java/resources/datas.json");
+        boolean foundFile = mu.comprobarRegistro("0707079653", "2020");
         assertTrue(foundFile);
     }
 
     // Unit test 8
 
+    @Test
     public void given_datosPaciente_when_preguntasDeSeguridad_thenOk(){
-        String [] datosPaciente = login.preguntarDatos(paciente);
+        String [] datosPaciente = new String[3];
+        datosPaciente[0] = "Anthony";
+        datosPaciente[1] = "Chamba";
+        datosPaciente[2] = "La Ferroviaria";
         String [] datosActuales = new String[3];
         datosActuales[0] = paciente.getNombre();
         datosActuales[1] = paciente.getApellido();
